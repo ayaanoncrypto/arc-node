@@ -219,7 +219,7 @@ curl -s -X POST http://localhost:8545 \
 
 The produced output is in JSON format.
 The `result` field represents the latest block number known to the node, in hexadecimal.
-It is not the next block height. You can use `printf "%0d"` to translate it into decimal.
+It is not the next block height. You can use `printf "%d\n" 0x64` to translate a hexadecimal value into decimal.
 It should increase over time.
 If it remains `0x0`, check the logs of the consensus layer for errors.
 Common causes are a missing or incomplete snapshot, mismatched `$ARC_RUN`
