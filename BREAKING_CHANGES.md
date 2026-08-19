@@ -7,6 +7,7 @@ Each bullet is prefixed with a flag identifying the kind of breaking change:
 - `[CLI]` -- CLI flag added, renamed, removed, or made required.
 - `[Config]` -- default value, environment variable, or manifest field change.
 - `[Format]` -- log, metric label, or serialized output format change that breaks parsers.
+- `[RPC]` -- externally observable JSON-RPC behavior change that can affect applications.
 
 Entries are split by audience. A change appears under `### For Validators` when validator-mode operation must change; otherwise it appears under `### For Node Operators`. A change requiring both audiences to act appears in both sections (rare).
 
@@ -26,9 +27,10 @@ No breaking changes in this release.
 
 ### For Node Operators
 
-- **[Config] `arc-node-execution`: JSON-RPC gas cap default lowered.**
+- **[Config][RPC] `arc-node-execution`: JSON-RPC gas cap default lowered.**
   - Old (`v0.7.1`): `--rpc.gascap` default `50000000` (Reth stock default).
   - New (`v0.7.2`): `--rpc.gascap` default `30000000`.
+  - The RPC gas cap limits gas available to `eth_call` and `eth_estimateGas` simulations. It is an RPC execution limit, not the protocol maximum gas limit for an on-chain transaction.
   - `eth_call` and `eth_estimateGas` requests that need more than 30M gas now fail with a gas-cap error. Pass `--rpc.gascap 50000000` (or higher) to restore the previous budget. Operators who never set the flag and do not rely on calls above 30M gas are unaffected.
 
 - **[CLI] `arc-node-execution`: replay-unprotected (pre-EIP-155) transactions are rejected over JSON-RPC by default.**
